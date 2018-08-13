@@ -46,6 +46,7 @@
                 </thead>
               </table>
             </div>
+            {{#unless hideUserStats}}
             <div class="table-responsive">
                 <table data-topic-url="/campaigns/clicked" data-topic-id="{{id}}/-1" data-sort-column="1" data-sort-order="asc" class="table table-bordered table-hover data-table-ajax display nowrap" width="100%" data-row-sort="0,1,1,1,1,1,0">
                     <thead>
@@ -73,6 +74,7 @@
                     </thead>
                 </table>
             </div>
+            {{/unless}}
         </div>
     </div>
 </div>

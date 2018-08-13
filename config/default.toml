@@ -21,6 +21,9 @@
 # Process title visible in monitoring logs and process listing
 title="mailtrain"
 
+# Hide sensible user data ? (individual clicked, opened...)
+hideUserStats=false
+
 # Enabled HTML editors
 editors=[
   ["summernote", "Summernote"],

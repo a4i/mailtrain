@@ -21,6 +21,8 @@ let uploads = multer({
     storage: uploadStorage
 });
 
+const hideUserStats = config.hideUserStats || false;
+
 router.all('/*', (req, res, next) => {
     if (!req.user) {
         req.flash('danger', _('Need to be logged in to access restricted content'));
@@ -338,6 +340,9 @@ router.get('/view/:id', passport.csrfProtection, (req, res) => {
             campaign.complaintRate = campaign.delivered ? Math.round((campaign.complained / campaign.delivered) * 10000) / 100 : 0;
             campaign.unsubscribeRate = campaign.delivered ? Math.round((campaign.unsubscribed / campaign.delivered) * 10000) / 100 : 0;
 
+            // may we show individual tracking stats ?
+            campaign.hideUserStats = hideUserStats;
+
             campaigns.getLinks(campaign.id, (err, links) => {
                 if (err) {
                     // ignore
@@ -394,6 +399,8 @@ router.get('/opened/:id', passport.csrfProtection, (req, res) => {
             campaign.delivered = campaign.delivered - campaign.bounced;
             campaign.clicksRate = campaign.delivered ? Math.round((campaign.clicks / campaign.delivered) * 100) : 0;
 
+            campaign.hideUserStats = hideUserStats;
+
             res.render('campaigns/opened', campaign);
         });
     });
@@ -402,6 +409,12 @@ router.get('/opened/:id', passport.csrfProtection, (req, res) => {
 router.get('/status/:id/:status', passport.csrfProtection, (req, res) => {
     let id = Number(req.params.id) || 0;
     let status;
+
+    if (hideUserStats) {
+        req.flash('danger',  _('Sensible user stats are disabled'));
+        return res.redirect('/campaigns');
+    }
+
     switch (req.params.status) {
         case 'delivered':
             status = 1;
@@ -496,6 +509,8 @@ router.get('/clicked/:id/:linkId', passport.csrfProtection, (req, res) => {
             campaign.delivered = campaign.delivered - campaign.bounced;
             campaign.clicksRate = campaign.delivered ? Math.round((campaign.clicks / campaign.delivered) * 100) : 0;
 
+            campaign.hideUserStats = hideUserStats;
+
             if (req.params.linkId === 'all') {
                 campaign.aggregated = true;
                 campaign.link = {
@@ -527,6 +542,13 @@ router.get('/clicked/:id/:linkId', passport.csrfProtection, (req, res) => {
 
 router.post('/clicked/ajax/:id/:linkId', (req, res) => {
     let linkId = Number(req.params.linkId) || 0;
+
+    if (hideUserStats) {
+        return res.json({
+            error: _('Sensible user stats are disabled'),
+            data: []
+        })
+    }
 
     campaigns.get(req.params.id, true, (err, campaign) => {
         if (err || !campaign) {
@@ -665,6 +687,13 @@ router.post('/status/ajax/:id/:status', (req, res) => {
 
 router.post('/clicked/ajax/:id/:linkId', (req, res) => {
     let linkId = Number(req.params.linkId) || 0;
+
+    if (hideUserStats) {
+      return res.json({
+        error: _('Sensible user stats are disabled'),
+        data: []
+      })
+    }
 
     campaigns.get(req.params.id, true, (err, campaign) => {
         if (err || !campaign) {

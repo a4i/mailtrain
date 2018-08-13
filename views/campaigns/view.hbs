@@ -123,21 +123,21 @@
         <dl class="dl-horizontal">
             {{#unless isIdling}}
 
-                <dt>{{#translate}}Delivered{{/translate}} <a href="/campaigns/status/{{id}}/delivered" title="{{#translate}}List subscribers who received this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></dt>
+                <dt>{{#translate}}Delivered{{/translate}} {{#unless hideUserStats}}<a href="/campaigns/status/{{id}}/delivered" title="{{#translate}}List subscribers who received this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>{{/unless}}</dt>
                 <dd>
                     <div style="margin-bottom: 20px;">
                         {{delivered}}
                     </div>
                 </dd>
 
-                <dt>{{#translate}}Blacklisted{{/translate}} <a href="/campaigns/status/{{id}}/blacklisted" title="{{#translate}}List subscribers who blacklisted by global blacklist{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></dt>
+                <dt>{{#translate}}Blacklisted{{/translate}} {{#unless hideUserStats}}<a href="/campaigns/status/{{id}}/blacklisted" title="{{#translate}}List subscribers who blacklisted by global blacklist{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>{{/unless}}</dt>
                 <dd>
                     <div style="margin-bottom: 20px;">
                         {{blacklisted}}
                     </div>
                 </dd>
 
-                <dt>{{#translate}}Bounced{{/translate}} <a href="/campaigns/status/{{id}}/bounced" title="{{#translate}}List subscribers who bounced{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></dt>
+                <dt>{{#translate}}Bounced{{/translate}} {{#unless hideUserStats}}<a href="/campaigns/status/{{id}}/bounced" title="{{#translate}}List subscribers who bounced{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>{{/unless}}</dt>
                 <dd>
                     <div class="progress">
                         <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{bounceRate}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 6em; width: {{bounceRate}}%;">
@@ -146,7 +146,7 @@
                     </div>
                 </dd>
 
-                <dt>{{#translate}}Complaints{{/translate}} <a href="/campaigns/status/{{id}}/complained" title="{{#translate}}List subscribers who complained for this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></dt>
+                <dt>{{#translate}}Complaints{{/translate}} {{#unless hideUserStats}}<a href="/campaigns/status/{{id}}/complained" title="{{#translate}}List subscribers who complained for this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>{{/unless}}</dt>
                 <dd>
                     <div class="progress">
                         <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{complaintRate}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 6em; width: {{complaintRate}}%;">
@@ -155,7 +155,7 @@
                     </div>
                 </dd>
 
-                <dt>{{#translate}}Unsubscribed{{/translate}} <a href="/campaigns/status/{{id}}/unsubscribed" title="{{#translate}}List subscribers who unsubscribed after this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></dt>
+                <dt>{{#translate}}Unsubscribed{{/translate}} {{#unless hideUserStats}}<a href="/campaigns/status/{{id}}/unsubscribed" title="{{#translate}}List subscribers who unsubscribed after this message{{/translate}}"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>{{/unless}}</dt>
                 <dd>
                     <div class="progress">
                         <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{unsubscribeRate}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 6em; width: {{unsubscribeRate}}%;">
