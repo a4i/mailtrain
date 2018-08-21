@@ -1,5 +1,6 @@
 'use strict';
 
+let config = require('config');
 let passport = require('../lib/passport');
 let express = require('express');
 let router = new express.Router();
@@ -11,10 +12,18 @@ let _ = require('../lib/translate')._;
 router.get('/logout', (req, res) => passport.logout(req, res));
 
 router.post('/login', passport.parseForm, (req, res, next) => passport.login(req, res, next));
-router.get('/login', (req, res) => {
-    res.render('users/login', {
-        next: req.query.next
-    });
+router.get('/login', (req, res, next) => {
+    if (config.trustedheaderauth.enabled) {
+        req.flash('danger');
+        if (req.query.next) {
+          req.body.next = req.query.next;
+        }
+        passport.login(req, res, next);
+    } else {
+        res.render('users/login', {
+            next: req.query.next
+        });
+    }
 });
 
 router.get('/forgot', passport.csrfProtection, (req, res) => {

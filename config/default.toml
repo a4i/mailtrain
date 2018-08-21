@@ -121,6 +121,12 @@ host="0.0.0.0"
 # VERP hostname is in the same domain as the From address.
 # disablesenderheader=true
 
+[trustedheaderauth]
+enabled=false
+autocreateaccount=false
+usernameHeader="uid"
+mailHeader="mail"
+
 [ldap]
 # enable to use ldap user backend
 enabled=false
